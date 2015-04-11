@@ -2,7 +2,6 @@ package Graph;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -24,7 +23,6 @@ public class GraphSolver {
 			String lineNumber = in.nextLine();
 			String[] numbers = lineNumber.split(" ");
 			this.townNumber = Integer.parseInt(numbers[0]);
-			System.out.println(townNumber);
 			this.pathNumber = Integer.parseInt(numbers[1]);
 			
 			
@@ -42,7 +40,7 @@ public class GraphSolver {
 	}
 	
 	private void mapMaker(String path){
-		path.replaceAll("\\s+","");
+		path = path.replaceAll(" ","");
 		char[] hold = path.toCharArray();
 		
 		Queue<String> queueHolder = new PriorityQueue();
