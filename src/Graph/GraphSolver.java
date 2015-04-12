@@ -81,12 +81,22 @@ public class GraphSolver {
 	public Stack<String> pathFinder(String direction){
 		Queue<String> path = new PriorityQueue(); // these will store the looked at strings and return them to the queue on the map.
 		char[] currentPath = direction.toCharArray();
-		char[] comparePath = paths.get(currentPath[1]).peek().toCharArray();
-
+		System.out.println("Begin!"+ "," + desiredPath.size());///////////////////////////////////////////////////////////
+		
+		if(paths.get(currentPath[1]).isEmpty()){
+		
 		System.out.println(direction + "," + desiredPath.size());///////////////////////////
+		
 		if (currentPath[1] == 'i'){
 			return desiredPath;
 		}
+		else{
+			desiredPath.pop();
+			return pathFinder(desiredPath.peek());
+		}
+		}
+		
+		char[] comparePath = paths.get(currentPath[1]).peek().toCharArray();
 		
 		//else if (desiredPath.contains(direction)){
 			//System.out.println("1");///////////////////////////////////////////
@@ -101,7 +111,7 @@ public class GraphSolver {
 		//	return pathFinder(desiredPath.peek());
 		//}
 		
-		else if( paths.get(currentPath[1]).isEmpty()){
+		if( paths.get(currentPath[1]).isEmpty()){
 			System.out.println("2");///////////////////////////////////////////////////////////////////////
 			desiredPath.pop();
 			return (pathFinder(desiredPath.peek()));
@@ -109,8 +119,8 @@ public class GraphSolver {
 		
 		else if( currentPath[2] == comparePath[2] || currentPath[3] == comparePath[3] ){
 			System.out.println("3"+ "," + desiredPath.size());///////////////////////////////////////////////////////////
-			desiredPath.push(direction);
-			return pathFinder(paths.get(currentPath[0]).remove());
+			desiredPath.push(paths.get(currentPath[1]).remove());
+			return pathFinder(desiredPath.peek());
 		}
 		
 		else if( currentPath[2] != comparePath[2] && currentPath[3] != comparePath[3] ){
@@ -119,12 +129,16 @@ public class GraphSolver {
 			for (String searched : paths.get(currentPath[1])){
 				System.out.println("4");//////////////////////////////////////////////////////////
 				System.out.println(searched);/////////////////////////////////////////////////////
+				char[] checker = searched.toCharArray();
+				if (currentPath[2] == checker[2] || currentPath[3] == checker[3]){
 					return pathFinder(searched);
+				}
 			}
+			desiredPath.pop(); // need a way to return this value back to the map, this might fix the problem
+			
 		}
-		
-		System.out.println(desiredPath.peek());
-		desiredPath.pop();
+		System.out.println(desiredPath.size() + "this is the size");
+		System.out.println(desiredPath.peek());/////////////////////////////////////
 		return pathFinder(desiredPath.peek());
 	}
 
